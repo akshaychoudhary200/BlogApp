@@ -1,5 +1,6 @@
 package org.example.blogapp.controller;
 
+import jakarta.validation.Valid;
 import org.example.blogapp.dto.PostDto;
 import org.example.blogapp.dto.PostResponseDto;
 import org.example.blogapp.service.PostService;
@@ -22,7 +23,7 @@ public class PostController {
 
     // create blog post rest api
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
@@ -38,6 +39,7 @@ public class PostController {
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
+
     // get post by id
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") long id){
@@ -46,7 +48,7 @@ public class PostController {
 
     // update post by id rest api
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") long id){
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") long id){
 
         PostDto postResponse = postService.updatePost(postDto, id);
 
